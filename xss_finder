@@ -1,0 +1,11 @@
+import requests
+header={"Cookie":"security=low; PHPSESSID=9ff6351eed21c7692156957182147669;w"} #header bilgilerini sozluk tipinde websitesinde f12ye basarak alacagiz. Sessionlarin hepsini almaliyiz
+
+dosya=open("xss_inject.txt","r")
+icerik=dosya.read()
+dosya.close()
+for i in icerik.splitlines():
+    url="http://10.0.2.4/dvwa/vulnerabilities/xss_r/?name="+str(i)
+    sonuc=requests.get(url=url,headers=header)
+    if str(i) in sonuc.content:
+        print("Muhtemel XxSs Olabilir:",i)
